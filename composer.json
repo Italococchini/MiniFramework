@@ -1,0 +1,26 @@
+{
+	"name": "",
+	"description": "",
+	"type": "",
+	"authors":[
+		{
+			"name": "Italo Cocchini",
+			"email": "italococchini@gmail.com",
+			"role": "administrator"
+		},
+		{
+			"name": "Rennier Cocchini",
+			"email": "rj_cg_09@gmail.com",
+			"role": "administrator"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Library\\": "library/",
+			"App\\": "app/"
+		}
+	}
+}
