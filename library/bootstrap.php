@@ -3,7 +3,8 @@
 class bootstrap{
 	
 
-	public function router( $url, $method ) {  
+	static function router( $url, $method ) { 
+
     	$result = [];
 	    $route = $_SERVER['REQUEST_URI'];
 	    if (strpos($route, '?')) {
@@ -28,35 +29,40 @@ class bootstrap{
 		return $result;
 	}
 
-	public static function load(){
-		
+	public static function load($router){
+
 		// Parametros de REQUEST
 		$method = $_SERVER['REQUEST_METHOD'];
 		//$uri = str_replace("?".$_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);  
 		$param = $_REQUEST;
-		
-		// Rutas
-		$router = Router::collection();
+
 		$ruta = self::router( $router, $method );
 
 		// Controlador y Accion
-    	$handler = (!empty($ruta))? $ruta : [] ;    	
+		$handler = (!empty($ruta))? $ruta : [] ;    	
 
-    	// Parametros de Accion
-    	$request = [];
-    	$action = [];
-    	if($handler){
-    		$action = explode('@', $handler["controller"]);
-    		$request = [
+
+		// Parametros de Accion
+		$data = $handler['param'];
+		if(count($param)>0){
+			$data = array_merge($param, $handler['param']); 
+		}
+		// Parametros de Accion
+		$request = [];
+		$action = [];
+		if($handler){
+    			$action = explode('@', $handler["controller"]);
+    			$request = [
 	    		'class' => $action[0],
 	   	    	'action' => $action[1],
 	   	    	'request' => $param,
-	   	    	'data' => $handler['param'],
+	   	    	'data' => $data,
 	   	    	'method' => $handler['method'],
 	   	    	'ruta' => $handler['ruta'],
 	   	    ];
     	}
    	    return $request;
+
 	}
 	
 	public static function run( $request = array() ){
