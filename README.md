@@ -2,7 +2,7 @@
 MVC con PHP con estilo de un MiniFramework
 
 # Condiciones de uso:
-Usalo, Mejoralo y Compartelo.
+Usalo, mejorálo y Compártelo.
 
-* La unica condicion para usarlo es compartir las mejoras.
-* De distribucion gratuita
+* La única condición para usarlo es compartir las mejoras.
+* De distribución gratuita
