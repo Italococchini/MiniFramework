@@ -29,23 +29,16 @@
                 display: inline-block;
             }
 
-            .subtitle {
-                font-size: 35px;
-                margin-bottom: 40px;
-            }
-
             .title {
-                font-size: 85px;
+                font-size: 72px;
                 margin-bottom: 40px;
             }
-
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">404</div>
-                <div class="subtitle">Ups! Pagina No Encontrada</div>
+                <div class="title">Ups! Error 503</div>
             </div>
         </div>
     </body>
