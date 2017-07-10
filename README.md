@@ -8,4 +8,4 @@ MVC con PHP con estilo de un MiniFramework
 3 - Compártelo.
 
 La única condición para usarlo es compartir las mejoras.
-# De distribución gratuita
+De distribución gratuita
