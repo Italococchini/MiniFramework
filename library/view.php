@@ -1,7 +1,7 @@
 <?php namespace Library;
 
-use Library\request as Input;
-use Library\view;
+use Library\Request as Input;
+use Library\View;
 
 class view 
 {
@@ -19,9 +19,7 @@ class view
 	public static function load($view="", $argument= array() )
 	{
 		$html = '';
-		$view_path   = APPLICATION_PATH."/app/view/". strtolower($view).".php";
-
-
+		$view_path   = APPLICATION_PATH."/app/view/".ucfirst($view).".php";
 		if( file_exists( $view_path ) )
 		{
 			// ----------------------------
@@ -43,7 +41,7 @@ class view
 			// ----------------------------
 			// Plantilla Layout
 			// ----------------------------
-			$layout_path = APPLICATION_PATH."/app/view/layout/". strtolower($layout).".php";
+			$layout_path = APPLICATION_PATH."/app/view/layout/".ucfirst($layout).".php";
 			if( file_exists( $layout_path ) ){
 				ob_start();
 				include_once $layout_path;

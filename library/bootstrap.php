@@ -1,71 +1,42 @@
 <?php namespace Library;
 	
-class bootstrap{
+class bootstrap {
 	
-
-	static function router( $url, $method ) { 
-
-    	$result = [];
-	    $route = $_SERVER['REQUEST_URI'];
-	    if (strpos($route, '?')) {
-	        $route = strstr($route, '?', true);
-	    }
-	    foreach($url as $k=>$r){
-	 	    $urlRule = preg_replace('/:([^\/]+)/', '(?<\1>[^/]+)', $k);
-	    	$urlRule = str_replace('/', '\/', $urlRule);
-		    preg_match_all('/:([^\/]+)/', $k, $parameterNames);
-		    $parameters = [];
-		    if (preg_match('/^' . $urlRule . '\/*$/s', $route, $matches)) {
-			        $parameters = array_intersect_key($matches, array_flip($parameterNames[1]));
-			    	$result = [
-			    		"ruta" => $k,
-			    		"method" => $r["method"],
-			    		"controller" => $r["controller"],
-			    		"param" => $parameters,
-			    	];
-		    }
-		}
-
-		return $result;
-	}
-
-	public static function load($router){
-
-		// Parametros de REQUEST
-		$method = $_SERVER['REQUEST_METHOD'];
-		//$uri = str_replace("?".$_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);  
-		$param = $_REQUEST;
-
-		$ruta = self::router( $router, $method );
+	public static function load( $server ){
+		
+		// Rutas
+		$ruta = Router::collection();
 
 		// Controlador y Accion
-		$handler = (!empty($ruta))? $ruta : [] ;    	
+    	$handler = (!empty($ruta))? $ruta : [] ;    	
+
+		// Parametros
+    	$data = $handler['param'];
+    	if( !empty($_REQUEST) ){
+    		$data = array_merge($data, $_REQUEST);
+    	}
 
 
-		// Parametros de Accion
-		$data = $handler['param'];
-		if(count($param)>0){
-			$data = array_merge($param, $handler['param']); 
-		}
-		// Parametros de Accion
-		$request = [];
-		$action = [];
-		if($handler){
-    			$action = explode('@', $handler["controller"]);
-    			$request = [
-	    		'class' => $action[0],
-	   	    	'action' => $action[1],
-	   	    	'request' => $param,
-	   	    	'data' => $data,
-	   	    	'method' => $handler['method'],
-	   	    	'ruta' => $handler['ruta'],
-	   	    ];
+    	// Request
+    	$request = [];
+    	if($handler){
+    		if( in_array( strtoupper($server['REQUEST_METHOD']), $handler['method']) ){			
+	    		$action = explode('@', $handler["controller"]);
+	    		$request = [
+		    		'class' => $action[0],
+		   	    	'action' => $action[1],
+		   	    	'data' => $data,
+		   	    	'method' => $handler['method'],
+		   	    	'ruta' => $handler['ruta'],
+		   	    ];
+    		}
     	}
    	    return $request;
-
 	}
 	
-	public static function run( $request = array() ){
+	public static function run( $server ){
+		$request = self::load( $server );
+
 		if(!empty($request)){
 			$class = new $request['class']; // Controlador
 			$method = get_class_methods( $class ); 

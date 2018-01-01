@@ -4,6 +4,9 @@
 	defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../'));
 
-	$request = Library\bootstrap::load(); 
-print_r($request);
-	Library\bootstrap::run( $request ); 
+	Library\bootstrap::run( $_SERVER );
+
+// ****************************
+// Testing
+// ****************************
+	print_r( Library\Router::collection() );
