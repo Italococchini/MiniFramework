@@ -15,20 +15,21 @@ class bootstrap {
     	if( !empty($_REQUEST) ){
     		$data = array_merge($data, $_REQUEST);
     	}
-
-
     	// Request
     	$request = [];
     	if($handler){
-    		if( in_array( strtoupper($server['REQUEST_METHOD']), $handler['method']) ){			
-	    		$action = explode('@', $handler["controller"]);
+    		$method = strtolower( $server['REQUEST_METHOD'] );
+    		if( isset( $handler['controller'][$method] ) ){
+				$instance = $handler['controller'];
+	    		$action = explode('@', $instance[$method]);
 	    		$request = [
 		    		'class' => $action[0],
 		   	    	'action' => $action[1],
 		   	    	'data' => $data,
-		   	    	'method' => $handler['method'],
-		   	    	'ruta' => $handler['ruta'],
+		   	    	'method' => $method,
+		   	    	'ruta' => $instance[$method],
 		   	    ];
+ 
     		}
     	}
    	    return $request;
@@ -47,7 +48,7 @@ class bootstrap {
 				}
 			}			
 		}
-		require_once APPLICATION_PATH . "/app/view/error/404.php";
+		require_once APPLICATION_PATH . "/app/error/404.php";
 		return 404;
 	}
 }	

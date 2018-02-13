@@ -22,7 +22,6 @@ Class router{
 	        $route = strstr($route, '?', true);
 	    }
 
-
 	    foreach($url as $k=>$r){
 	 	    $urlRule = preg_replace('/:([^\/]+)/', '(?<\1>[^/]+)', $k);
 	    	$urlRule = str_replace('/', '\/', $urlRule);
@@ -32,14 +31,16 @@ Class router{
 			        $parameters = array_intersect_key($matches, array_flip($parameterNames[1]));
 			    	$result = [
 			    		"ruta" => $k,
-			    		"method" => $r["method"],
-			    		"controller" => $r["controller"],
+			    		"controller" => $r,
 			    		"param" => $parameters,
 			    	];
 		    }
 		}
 		return $result;
 	}
+
+
+
 
 	public function any( $route, $controller ){
 		// return self::router[$route]['ANY'] = $controller;
@@ -56,6 +57,4 @@ Class router{
 	public function put( $route, $controller ){
 		// return self::router[$route]['PUT'] = $controller;
 	}
-
-
 }

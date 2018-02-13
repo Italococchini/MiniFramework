@@ -1,4 +1,4 @@
-<?php namespace App\Controller;
+<?php namespace App\usuario\Controller;
 
 use Library\view;
 
@@ -7,11 +7,11 @@ use Library\view;
  	function index( $request )
  	{
  		// $result = \Library\curl::get([]);
- 		return view::load('home', $request);
+ 		return view::load('home', 'usuario', $request);
  	}
 
  	function create( $request )
  	{
- 		return view::load('create', $request);
+ 		return view::load('create', 'usuario', $request);
  	}
  } 
